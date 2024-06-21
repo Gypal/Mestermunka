@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Régi Fényképezőgép Gomb</title>
+    <style>
+        .camera-button {
+            position: relative;
+            width: 120px;
+            height: 80px;
+            background-color: #333;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .camera-button::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px #888;
+        }
+
+        .camera-flash {
+            position: absolute;
+            top: 5px;
+            left: 80px;
+            width: 20px;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .camera-lens {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #555;
+            border-radius: 50%;
+            box-shadow: 0 0 0 5px #222;
+        }
+
+        .camera-button:hover {
+            background-color: #555;
+        }
+
+        .camera-button:active .camera-flash {
+            background-color: #fff;
+        }
+
+        .flash-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: none;
+            pointer-events: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="camera-button" onclick="flashEffect()">
+        <div class="camera-lens"></div>
+        <div class="camera-flash"></div>
+    </div>
+    <div class="flash-effect" id="flash-effect"></div>
+    <script>
+        function flashEffect() {
+            const flash = document.getElementById('flash-effect');
+            flash.style.display = 'block';
+            setTimeout(() => {
+                flash.style.display = 'none';
+            }, 100);
+        }
+    </script>
+</body>
+</html>

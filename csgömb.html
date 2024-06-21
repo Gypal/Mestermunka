@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logarithmic Spiral in the Universe</title>
+    <style>
+
+        body
+         {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black;
+        }
+        canvas {
+            background-color: #000000;
+        }
+
+    </style>
+</head>
+<body>
+    
+
+    <audio id="background-music" loop>
+        <source src="air-flight-110373.mp3" type="audio/mpeg">
+    </audio>
+
+    <button onclick="document.getElementById('background-music').play()"> M</button>
+
+
+
+    <canvas id="spiralCanvas" width="1200" height="800"></canvas>
+
+
+    
+
+    <script>
+        function drawStars(ctx, width, height, numStars) {
+            for (let i = 0; i < numStars; i++) {
+                const x = Math.random() * width;
+                const y = Math.random() * height;
+                const radius = Math.random() * 1.5;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+            }
+        }
+
+        function drawPlanets(ctx) {
+            const planets = [
+                
+                { x: 300, y: 400, radius: 50, color: 'blue' },
+                
+            ];
+
+            planets.forEach(planet => {
+                ctx.beginPath();
+                ctx.arc(planet.x, planet.y, planet.radius, 0, 2 * Math.PI, false);
+                ctx.fillStyle = planet.color;
+                ctx.fill();
+            });
+        }
+
+        function drawStar(ctx, centerX, centerY)
+
+
+         {
+
+
+            const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 90);
+            gradient.addColorStop(0, 'green');
+            gradient.addColorStop(1, 'rgba(255, 165, 0, 0)');
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 100, 0, 2 * Math.PI, false);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+             
+
+
+        }
+
+        function drawLogarithmicSpiral(ctx, centerX, centerY, a, b, maxTheta, rotationAngle) {
+            ctx.beginPath();
+            for (let theta = 0; theta < maxTheta; theta += 0.01) {
+                let r = a * Math.exp(b * theta);
+                let x = centerX + r * Math.cos(theta + rotationAngle);
+                let y = centerY + r * Math.sin(theta + rotationAngle);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'cyan';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+
+        function drawSatellite(ctx, angle) {
+            const x = 600 + 200 * Math.cos(angle);
+            const y = 400 + 200 * Math.sin(angle);
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'silver';
+            ctx.fill();
+        }
+
+        window.onload = function() {
+            const canvas = document.getElementById('spiralCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const a = 1;
+            const b = 0.2;
+            const maxTheta = 10 * Math.PI;
+            let angle = 0;
+            let rotationAngle = 0;
+
+            function drawScene() {
+                ctx.clearRect(0, 0, width, height);
+                drawStars(ctx, width, height, 500);
+                drawLogarithmicSpiral(ctx, centerX, centerY, a, b, maxTheta, rotationAngle);
+                 drawPlanets(ctx, angle, 400, 200);
+                drawStar(ctx, 1000, 700);
+                drawLogarithmicSpiral(ctx, centerX, centerY, a, b, maxTheta, rotationAngle);
+                drawSatellite(ctx, angle);
+                angle += 0.01;
+                rotationAngle -= 0.01;
+                requestAnimationFrame(drawScene); 
+
+            }
+
+            function drawPlanets(ctx, angle) {
+    const ellipseWidth = 400;
+    const ellipseHeight = 200; 
+    const centerX = 600 + ellipseWidth * Math.cos(angle);
+    const centerY = 400 + ellipseHeight * Math.sin(angle);
+
+
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI, false);
+    ctx.fillStyle = 'blue';
+    ctx.fill();
+}
+const backgroundMusic = document.getElementById('background-music');
+            backgroundMusic.play();
+
+
+
+
+
+
+            drawScene();
+        };
+
+    </script>
+</body>
+</html>
